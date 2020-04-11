@@ -6,6 +6,7 @@
   </div>
   <p>Here is your word</p>
   {{state['word_so_far']}}
+  <p>Guesses left: {{state['guesses_left']}}</p>
   <form method="post" action="/play">
     Guess a letter: <input type="text" name="guess">
     <br>

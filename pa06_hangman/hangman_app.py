@@ -31,7 +31,7 @@ def print_word(word, guessed_letters):
          result += letter
       else:
          result += '-'
-   print(result)
+   return result
 
 
 def correct_guesses(word, guessed_letters):
@@ -88,7 +88,7 @@ def play_hangman():
                print("You have no more guesses, you have lost the game!")
                print("The word was:", word)
          else:
-               print_word(word,guessed_letters)
+               print(print_word(word,guessed_letters))
                print("You have", guesses_left, "guesses.")
                letter = input("Please guess another letter. ")
       answer = input("Would you like to play again? (y/n) ")

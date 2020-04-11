@@ -11,7 +11,8 @@ global state
 state = {'guesses':[],
          'word':"interesting",
 		 'word_so_far':"-----------",
-		 'done':False}
+		 'done':False,
+		 'guesses_left':6}
 
 @app.route('/')
 @app.route('/main')
@@ -25,8 +26,9 @@ def about():
 @app.route('/start')
 def play():
 	global state
-	state['word']=hangman_app.generate_random_word()
+	state['word'] = hangman_app.generate_random_word()
 	state['guesses'] = []
+	state['word_so_far'] = hangman_app.print_word(state['word'], state['guesses'])
 	return render_template("start.html",state=state)
 
 @app.route('/play',methods=['GET','POST'])
