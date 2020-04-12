@@ -40,15 +40,23 @@ def hangman():
 
 	elif request.method == 'POST':
 		letter = request.form['guess']
+		state['guesses'] += [letter]
+		state['word_so_far'] = hangman_app.print_word(state['word'], state['guesses'])
+		if letter in state['guesses']:
+			state['guesses_left'] -= 1
+			return render_template("play.html", letter=letter, state=state,)
 		# check if letter has already been guessed
 		# and generate a response to guess again
+		if letter in state['word']:
+			return render_template("play.html", letter=letter, state=state,)
 		# else check if letter is in word
+		else:
+			state['guesses_left'] -= 1
+			return render_template("play.html",letter=letter, state=state)
 		# then see if the word is complete
 		# if letter not in word, then tell them
-		state['guesses'] += [letter]
 		return render_template('play.html',state=state)
-
-
+		
 
 
 if __name__ == '__main__':
