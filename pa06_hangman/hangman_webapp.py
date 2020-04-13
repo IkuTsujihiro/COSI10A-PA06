@@ -12,7 +12,8 @@ state = {'guesses':[],
          'word':"interesting",
 		 'word_so_far':"-----------",
 		 'done':False,
-		 'guesses_left':6}
+		 'guesses_left':6,
+		 'result':"none"}
 
 @app.route('/')
 @app.route('/main')
@@ -26,6 +27,7 @@ def about():
 @app.route('/start')
 def play():
 	global state
+	state['done'] = False
 	state['word'] = hangman_app.generate_random_word()
 	state['guesses'] = []
 	state['guesses_left'] = 6
@@ -41,25 +43,25 @@ def hangman():
 
 	elif request.method == 'POST':
 		letter = request.form['guess']
-		
-		
-		# else check if letter is in word
-		if letter in state['guesses']:
+		# check if letter has already been guessed
+		if letter and letter in state['guesses']:
 			state['guesses_left'] -= 1
+			state['result'] = "duplicate"
 			return render_template("play.html", state=state)
-		elif letter in state['word']:
+		# check if letter is in word
+		elif letter and letter in state['word']:
 			state['guesses'] += [letter]
 			state['word_so_far'] = hangman_app.print_word(state['word'], state['guesses'])
+			state['result'] = "correct"
+			# check if the whole word has been guessed
 			if len(state['word']) == hangman_app.correct_guesses(state['word'], state['guesses']):
 				state['done'] = True
 			return render_template("play.html", state=state)
-		# check if letter has already been guessed
-		# and generate a response to guess again
+		# otherwise, wrong guess
 		else:
 			state['guesses'] += [letter]
 			state['guesses_left'] -= 1
-		# then see if the word is complete
-		# if letter not in word, then tell them
+			state['result'] = "wrong"
 		return render_template('play.html',state=state)
 		
 

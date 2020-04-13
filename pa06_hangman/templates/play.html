@@ -13,8 +13,16 @@
     <form method="post" action="/play">
       Guess a letter: <input type="text" name="guess">
       <br>
-      <input type="submit" class="btn btn-lg btn-danger" style="margin-top:10px;">
+      <input type="submit" class="btn btn-lg btn-danger" style="margin-top:10px; margin-bottom: 10px">
     </form>
+
+    {% if state['result'] == "correct" %}
+    <h3>Your guess is correct!</h3>
+    {% elif state['result'] == "duplicate" %}
+    <h3>You had already guessed this letter.</h3>
+    {% else %}
+    <h3>Your guess is wrong. Try again!</h3>
+    {% endif %}
 
     <p>Here are the letters you've guessed already</p>
     {% for x in state['guesses'] %}
@@ -24,13 +32,11 @@
   {% endif %}
 
   {% if state['done'] %}
-    <p>Good job! You have correctly guessed the word.</p>
-    <br></br>
-    {{"The word is: " + state['word']}}
+    <h3>Good job! You have correctly guessed the word.</h3>
+    <h3>{{"The word is: " + state['word']}}</h3>
   {% elif state['guesses_left'] == 0 %}
-      {{"You have run out of guesses. Good luck next time!"}}
-      <br></br>
-      {{"The word was: " + state['word']}}
+    <h3>You have run out of guesses. Good luck next time!</h3>
+    <h3>{{"The word was: " + state['word']}}</h3>
   {% endif %}
 
 </div>
