@@ -28,6 +28,7 @@ def play():
 	global state
 	state['word'] = hangman_app.generate_random_word()
 	state['guesses'] = []
+	state['guesses_left'] = 6
 	state['word_so_far'] = hangman_app.print_word(state['word'], state['guesses'])
 	return render_template("start.html",state=state)
 
@@ -40,19 +41,23 @@ def hangman():
 
 	elif request.method == 'POST':
 		letter = request.form['guess']
-		state['guesses'] += [letter]
-		state['word_so_far'] = hangman_app.print_word(state['word'], state['guesses'])
+		
+		
+		# else check if letter is in word
 		if letter in state['guesses']:
 			state['guesses_left'] -= 1
-			return render_template("play.html", letter=letter, state=state,)
+			return render_template("play.html", state=state)
+		elif letter in state['word']:
+			state['guesses'] += [letter]
+			state['word_so_far'] = hangman_app.print_word(state['word'], state['guesses'])
+			if len(state['word']) == hangman_app.correct_guesses(state['word'], state['guesses']):
+				state['done'] = True
+			return render_template("play.html", state=state)
 		# check if letter has already been guessed
 		# and generate a response to guess again
-		if letter in state['word']:
-			return render_template("play.html", letter=letter, state=state,)
-		# else check if letter is in word
 		else:
+			state['guesses'] += [letter]
 			state['guesses_left'] -= 1
-			return render_template("play.html",letter=letter, state=state)
 		# then see if the word is complete
 		# if letter not in word, then tell them
 		return render_template('play.html',state=state)

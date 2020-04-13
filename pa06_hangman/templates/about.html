@@ -3,10 +3,49 @@
 {% block content %}
     
     <div class="jumbotron text-center">
-        <h1>Afternoon Tea/m</h1>
+        <h2 style="margin-bottom:20px">Afternoon Tea/m</h2>
         <img src="{{url_for('static', filename='team_pic.jpg')}}"
         style="max-width: 100%; height: auto" 
         alt="'Afternoon Tea/m' members" />
+    </div>
+
+    <div class="text-center" style="margin-top: 50px; margin-bottom: 30px">
+        <h2>These are our team members!</h2>
+    </div>
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-sm jumbotron">
+                <img src="{{url_for('static', filename='Chloe_Chau.jpg')}}"
+                style="max-width: 100%; height: auto; margin-bottom: 15px" 
+                alt="Chloe Chau" />
+                <h3 style="margin-bottom:5px">Chloe Chau</h3>
+                <p>I am a student of Brandeis University. I am from Boston. I currently am a Sophomore. I plan to double major Business and Computer Science.</p>
+            </div>
+            <div class="col-sm col-sm-offset-1 jumbotron">
+                <img src="{{url_for('static', filename='Iku_Tsujihiro.jpg')}}"
+                style="max-width: 100%; height: auto; margin-bottom: 15px" 
+                alt="Iku Tsujihiro" />
+                <h3 style="margin-bottom:5px">Iku Tsujihiro</h3>
+                <p>I am a sophomore student at Brandeis. I am from Tokyo, Japan. My major is Philosophy, and my minor is Legal Studies. I cannot think anymore!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm jumbotron">
+                <img src="{{url_for('static', filename='Joseph_Choi.jpg')}}"
+                style="max-width: 100%; height: auto; margin-bottom: 15px" 
+                alt="Joseph Choi" />
+                <h3 style="margin-bottom:5px">Joseph Choi</h3>
+                <p>Hi guys! My name is Joseph Choi and I'm from Seoul, Korea I'm currently a junior studying Biology and Neuroscience at Brandeis!</p>
+            </div>
+            <div class="col-sm col-sm-offset-1 jumbotron">
+                <img src="{{url_for('static', filename='Lisa_Sakai.jpg')}}"
+                style="max-width: 100%; height: auto; margin-bottom: 15px" 
+                alt="Lisa Sakai" />
+                <h3 style="margin-bottom:5px">Lisa Sakai</h3>
+                <p>I am a sophomore from New York, studying business and psychology at Brandeis University.</p>
+            </div>
+          </div>
     </div>
 
 {% endblock %}

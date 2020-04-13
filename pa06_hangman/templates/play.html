@@ -1,31 +1,38 @@
 {% extends "fancylayout.html" %}
 
 {% block content %}
-<div class="jumbotron">
+<div class="jumbotron text-center">
   <h1>Hangman</h1>
 </div>
-<p>Here is your word</p>
-{{state['word_so_far']}}
-<p>Guesses left: {{state['guesses_left']}}</p>
-<form method="post" action="/play">
-  Guess a letter: <input type="text" name="guess">
-  <br>
-  <input type="submit" class="btn btn-lg btn-danger">
-</form>
 
-<p>Here are the letters you've guessed already</p>
-  {% for x in state['guesses'] %}
-   {{x}}
-  {% endfor %}
+<div style="font-size: medium;">
+  {% if not state['done'] and state['guesses_left'] != 0 %}
+    <p>Here is your word</p>
+    {{state['word_so_far']}}
+    <p>Guesses left: {{state['guesses_left']}}</p>
+    <form method="post" action="/play">
+      Guess a letter: <input type="text" name="guess">
+      <br>
+      <input type="submit" class="btn btn-lg btn-danger" style="margin-top:10px;">
+    </form>
 
+    <p>Here are the letters you've guessed already</p>
+    {% for x in state['guesses'] %}
+      {{x}}
+    {% endfor %}
 
-{% if letter in state['guesses'] %}
-   <p> This letter has already been guessed. Please guess again. </p> 
-{% elif letter not in state['word'] %}
-    <p> This letter is not in the word. Please guess again</p>
-{% else %}
-    <p> Good job, this is in the word. Make another guess. </p>
-{% endif %}
+  {% endif %}
 
+  {% if state['done'] %}
+    <p>Good job! You have correctly guessed the word.</p>
+    <br></br>
+    {{"The word is: " + state['word']}}
+  {% elif state['guesses_left'] == 0 %}
+      {{"You have run out of guesses. Good luck next time!"}}
+      <br></br>
+      {{"The word was: " + state['word']}}
+  {% endif %}
+
+</div>
 {% endblock %}
 
